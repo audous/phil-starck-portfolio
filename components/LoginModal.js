@@ -6,8 +6,10 @@ export default function LoginModal({ onClose }) {
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
 
+  const [registerLogin, setRegisterLogin] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+
   const [loginError, setLoginError] = useState("");
 
   const handleLogin = async (e) => {
@@ -30,6 +32,7 @@ export default function LoginModal({ onClose }) {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       body: JSON.stringify({
+        login: registerLogin,
         email: registerEmail,
         password: registerPassword,
       }),
@@ -61,6 +64,14 @@ export default function LoginModal({ onClose }) {
 
         {isRegistering ? (
           <form onSubmit={handleRegister}>
+            <input
+              type="text"
+              className="w-full mb-3 border p-2 rounded"
+              placeholder="Login Name"
+              value={registerLogin}
+              onChange={(e) => setRegisterLogin(e.target.value)}
+              required
+            />
             <input
               type="email"
               className="w-full mb-3 border p-2 rounded"
