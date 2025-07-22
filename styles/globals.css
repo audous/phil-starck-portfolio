@@ -1,0 +1,50 @@
+/* globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  --nintendo-red: #e60012;
+  --nintendo-gray: #f4f4f4;
+  --font-nintendo: 'Press Start 2P', cursive;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--nintendo-gray);
+  color: #222;
+  font-family: var(--font-nintendo);
+  text-align: center;
+}
+
+h1 {
+  color: var(--nintendo-red);
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  text-shadow: 2px 2px #00000050;
+}
+
+.button-nintendo {
+  background-color: var(--nintendo-red);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  margin: 1rem;
+  font-family: var(--font-nintendo);
+  font-size: 0.75rem;
+  border-radius: 12px;
+  box-shadow: 3px 3px 0 #222;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.button-nintendo:hover {
+  transform: scale(1.05);
+}
+
+.container-nintendo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
