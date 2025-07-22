@@ -61,10 +61,7 @@ export default function LoginModal({ onClose }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-sm shadow-lg relative">
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500"
-        >
+        <button onClick={onClose} className="button-nintendo">
           ✕
         </button>
 
@@ -98,14 +95,12 @@ export default function LoginModal({ onClose }) {
               onChange={(e) => setRegisterPassword(e.target.value)}
               required
             />
-            <button className="w-full bg-green-600 text-white py-2 rounded">
-              Register
-            </button>
+            <button className="button-nintendo">Register</button>
             <p className="text-sm mt-2">
               Already have an account?{" "}
               <button
                 type="button"
-                className="underline text-blue-600"
+                className="button-nintendo"
                 onClick={() => setIsRegistering(false)}
               >
                 Log in
@@ -130,9 +125,7 @@ export default function LoginModal({ onClose }) {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <button className="w-full bg-blue-600 text-white py-2 rounded">
-              Login
-            </button>
+            <button className="button-nintendo">Login</button>
             {loginError && (
               <p className="text-red-500 text-sm mt-2">{loginError}</p>
             )}
@@ -140,7 +133,7 @@ export default function LoginModal({ onClose }) {
               Don’t have an account?{" "}
               <button
                 type="button"
-                className="underline text-green-600"
+                className="button-nintendo"
                 onClick={() => setIsRegistering(true)}
               >
                 Register
