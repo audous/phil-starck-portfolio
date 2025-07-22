@@ -41,8 +41,18 @@ export default function LoginModal({ onClose }) {
 
     const data = await res.json();
     if (res.ok) {
-      alert("Registration successful. You can now log in.");
-      setIsRegistering(false);
+      // ✅ Auto login after successful registration
+      const loginResult = await signIn("credentials", {
+        redirect: false,
+        email: registerEmail,
+        password: registerPassword,
+      });
+
+      if (loginResult.ok) {
+        onClose(); // Close the modal on successful login
+      } else {
+        alert("Registration succeeded, but auto-login failed.");
+      }
     } else {
       alert(data.message || "Registration failed");
     }
