@@ -1,6 +1,6 @@
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
-import LoginModal from "@/components/LoginModal";
+import LoginModal from "../components/LoginModal";
 
 export default function About() {
   const { data: session } = useSession();
