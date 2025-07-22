@@ -9,7 +9,7 @@ export default function Dashboard() {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">
-        Welcome to Phil Starck's Portfolio
+        Welcome to Phil Starck&apos;s Portfolio
       </h1>
 
       {session ? (
