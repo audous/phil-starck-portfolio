@@ -37,6 +37,7 @@ export default function ResetPasswordPage() {
       const data = await res.json();
       if (res.ok) {
         setSuccess("Password updated! You can now log in.");
+        router.push("/dashboard");
       } else {
         setError(data.message || "Something went wrong.");
       }
