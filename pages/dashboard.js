@@ -15,18 +15,12 @@ export default function Dashboard() {
       {session ? (
         <div className="flex flex-col items-start gap-2">
           <p>Hello, {session.user.name || session.user.email}</p>
-          <button
-            onClick={() => signOut()}
-            className="bg-red-500 text-white px-4 py-2 rounded"
-          >
+          <button onClick={() => signOut()} className="button-nintendo">
             Logout
           </button>
         </div>
       ) : (
-        <button
-          onClick={() => setShowModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
+        <button onClick={() => setShowModal(true)} className="button-nintendo">
           Login / Register
         </button>
       )}
