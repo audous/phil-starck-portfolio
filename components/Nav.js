@@ -1,31 +1,29 @@
-import { useSession, signOut } from "next-auth/react";
+// components/Nav.js
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Nav() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   return (
-    <nav className="p-4 bg-gray-800 text-white flex justify-between">
-      <div>
-        <Link href="/" className="mr-4">
-          Home
+    <nav className="flex gap-4 p-4 bg-gray-100 rounded-2xl shadow items-center">
+      <Link href="/dashboard" className="font-bold hover:underline">
+        Dashboard
+      </Link>
+      &nbsp;
+      {session?.user?.meta === "admin" && (
+        <Link href="/admin/addpage" className="font-bold hover:underline">
+          Add Page
         </Link>
-        <Link href="/about" className="mr-4">
-          About
-        </Link>
-      </div>
-      <div>
-        {session ? (
-          <>
-            <span className="mr-4">Hi, {session.user.name}</span>
-            <button onClick={() => signOut()} className="underline">
-              Logout
-            </button>
-          </>
-        ) : (
-          <Link href="/login">Login</Link>
-        )}
-      </div>
+      )}
+      {session && (
+        <button
+          onClick={() => signOut()}
+          className="ml-auto px-4 py-1 rounded bg-red-500 text-white hover:bg-red-600"
+        >
+          Sign Out
+        </button>
+      )}
     </nav>
   );
 }

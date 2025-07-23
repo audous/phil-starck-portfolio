@@ -1,6 +1,7 @@
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import LoginModal from "../components/LoginModal";
+import Nav from "../components/Nav";
 
 export default function Dashboard() {
   const { data: session } = useSession();
@@ -8,6 +9,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-8">
+      <Nav />
       <h1 className="text-2xl font-bold mb-4">
         Welcome to Phil Starck&apos;s Portfolio
       </h1>
