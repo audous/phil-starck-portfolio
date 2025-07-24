@@ -52,8 +52,13 @@ export default function CustomPage({ title, html }) {
   return (
     <div className="max-w-2xl mx-auto mt-8">
       <Nav />
-      <h1 className="text-3xl font-bold mb-6">{title}</h1>
-      <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+
+      <div className="center-container">
+        <h1>{title}</h1>
+      </div>
+      <div className="center-container">
+        <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+      </div>
     </div>
   );
 }
