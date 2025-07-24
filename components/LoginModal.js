@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 
-export default function LoginModal({ onClose }) {
+export default function LoginModal({ onClose = () => {} }) {
   // Login/register state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
