@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Nav from "../../components/Nav";
+import UploadForm from "../../components/UploadForm";
+import Image from "next/image";
 
 export default function AddPage() {
   const { data: session } = useSession();
@@ -41,6 +43,14 @@ export default function AddPage() {
     <div className="max-w-lg mx-auto mt-8">
       <Nav />
       <h1 className="text-2xl font-bold mb-4">Add New Page</h1>
+      <UploadForm />
+      <Image
+        src={"/cld-sample-5"}
+        alt="Cloudinary image"
+        width={600}
+        height={400}
+        style={{ borderRadius: "1.5rem" }}
+      />
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
