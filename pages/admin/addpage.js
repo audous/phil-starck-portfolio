@@ -45,7 +45,9 @@ export default function AddPage() {
       <h1 className="text-2xl font-bold mb-4">Add New Page</h1>
       <UploadForm />
       <Image
-        src={"/cld-sample-5"}
+        src={
+          "https://res.cloudinary.com/dfkwfkuu5/image/upload/v1753394481/uploads/jtyszupdbh3xmbis20dj.png"
+        }
         alt="Cloudinary image"
         width={600}
         height={400}
