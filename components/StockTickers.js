@@ -1,33 +1,36 @@
-// components/StockTickers.js
-import { useState } from "react";
-
-const TICKERS = [
-  "AAPL",
-  "MSFT",
-  "GOOGL",
-  "AMZN",
-  "TSLA",
-  "META",
-  "NVDA",
-  "NFLX",
-  "AMD",
-  "INTC",
-];
+import { useState, useEffect } from "react";
 
 export default function StockTickers({ onSelect }) {
   const [input, setInput] = useState("");
-  const [filtered, setFiltered] = useState(TICKERS);
+  const [tickers, setTickers] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+
+  useEffect(() => {
+    async function load() {
+      const res = await fetch("/api/tickers");
+      const data = await res.json();
+      setTickers(data.tickers || []);
+      setFiltered(data.tickers || []);
+    }
+    load();
+  }, []);
 
   function handleChange(e) {
     const value = e.target.value.toUpperCase();
     setInput(value);
-    setFiltered(TICKERS.filter((t) => t.startsWith(value)));
+    setFiltered(
+      tickers.filter(
+        (t) =>
+          t.symbol.startsWith(value) ||
+          (t.name && t.name.toUpperCase().includes(value))
+      )
+    );
   }
 
-  function handleSelect(ticker) {
-    setInput(ticker);
-    setFiltered([ticker]);
-    onSelect(ticker);
+  function handleSelect(symbol) {
+    setInput(symbol);
+    setFiltered(tickers.filter((t) => t.symbol === symbol));
+    onSelect(symbol);
   }
 
   return (
@@ -38,16 +41,22 @@ export default function StockTickers({ onSelect }) {
         value={input}
         placeholder="Type a stock symbol..."
         onChange={handleChange}
-        style={{ padding: 8, fontSize: 16, width: 220, marginRight: 8 }}
+        style={{ padding: 8, fontSize: 16, width: 240, marginRight: 8 }}
       />
       <datalist id="tickers">
-        {filtered.map((ticker) => (
-          <option value={ticker} key={ticker} />
+        {filtered.slice(0, 100).map((ticker) => (
+          <option
+            value={ticker.symbol}
+            label={
+              ticker.name ? `${ticker.symbol} - ${ticker.name}` : ticker.symbol
+            }
+            key={ticker.symbol}
+          />
         ))}
       </datalist>
       <button
         onClick={() => handleSelect(input)}
-        disabled={!TICKERS.includes(input)}
+        disabled={!tickers.some((t) => t.symbol === input)}
       >
         Load
       </button>
