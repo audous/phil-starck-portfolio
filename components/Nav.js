@@ -23,6 +23,17 @@ export default function Nav() {
           Add Page&nbsp;
         </Link>
       )}
+      <Link href="/stock-tickers" className="font-bold hover:underline">
+        stock-tickers&nbsp;
+      </Link>
+      {session?.user?.meta === "admin" && (
+        <Link
+          href="/admin/update-tickers"
+          className="font-bold hover:underline"
+        >
+          update-tickers&nbsp;
+        </Link>
+      )}
       {/* List custom pages */}
       {pages.map((page) => (
         <Link

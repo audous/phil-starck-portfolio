@@ -1,6 +1,8 @@
-// pages/stock-tickers.js
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
+import Nav from "../components/Nav";
+import LoginModal from "../components/LoginModal";
 import StockTickers from "../components/StockTickers";
 
 // Chart.js imports & registration
@@ -30,6 +32,7 @@ const Line = dynamic(() => import("react-chartjs-2").then((mod) => mod.Line), {
 });
 
 export default function StockTickersPage() {
+  const { data: session, status } = useSession();
   const [ticker, setTicker] = useState("");
   const [loading, setLoading] = useState(false);
   const [chartData, setChartData] = useState(null);
@@ -81,26 +84,36 @@ export default function StockTickersPage() {
     setLoading(false);
   }
 
+  // Show loading or Nav/LoginModal/session UI
   return (
-    <div style={{ maxWidth: 900, margin: "30px auto", padding: 16 }}>
-      <h2>Stock Tickers</h2>
-      <StockTickers onSelect={fetchStockData} />
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {chartData && (
-        <div style={{ marginTop: 24 }}>
-          <Line
-            data={chartData}
-            options={{
-              scales: {
-                x: { display: false },
-                y: { beginAtZero: false },
-              },
-            }}
-            height={350}
-          />
+    <>
+      <Nav />
+      {status === "loading" ? (
+        <div style={{ padding: 32 }}>Loading...</div>
+      ) : !session ? (
+        <LoginModal />
+      ) : (
+        <div style={{ maxWidth: 900, margin: "30px auto", padding: 16 }}>
+          <h2>Stock Tickers</h2>
+          <StockTickers onSelect={fetchStockData} />
+          {loading && <p>Loading...</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {chartData && (
+            <div style={{ marginTop: 24 }}>
+              <Line
+                data={chartData}
+                options={{
+                  scales: {
+                    x: { display: false },
+                    y: { beginAtZero: false },
+                  },
+                }}
+                height={350}
+              />
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 }
