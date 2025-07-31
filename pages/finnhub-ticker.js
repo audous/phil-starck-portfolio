@@ -1,4 +1,5 @@
 import { useState } from "react";
+import withLoginGate from "../components/hoc/withLoginGate";
 
 // Simple ticker list; expand as needed
 const TICKERS = [
@@ -14,7 +15,7 @@ const TICKERS = [
   "INTC",
 ];
 
-export default function FinnhubTickerPage() {
+function FinnhubTickerPage() {
   const [selected, setSelected] = useState("");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -107,3 +108,4 @@ export default function FinnhubTickerPage() {
     </div>
   );
 }
+export default withLoginGate(FinnhubTickerPage);
