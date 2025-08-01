@@ -1,45 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function StockTickers({ onSelect }) {
   const [input, setInput] = useState("");
   const [tickers, setTickers] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-
-  useEffect(() => {
-    async function load() {
-      const res = await fetch("/api/tickers");
-      const data = await res.json();
-      setTickers(data.tickers || []);
-      setFiltered(data.tickers || []);
-    }
-    load();
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const [timeoutId, setTimeoutId] = useState(null);
 
   function handleChange(e) {
     const value = e.target.value.toUpperCase();
     setInput(value);
-    setFiltered(
-      tickers
-        .filter(
-          (t) =>
-            t.symbol.startsWith(value) ||
-            (t.name && t.name.toUpperCase().includes(value))
-        )
-        .slice(0, 100) // Show only first 100 results
-    );
+
+    // Only fetch if input is at least 1 char
+    if (value.length === 0) {
+      setTickers([]);
+      return;
+    }
+
+    setLoading(true);
+
+    // Debounce the API call by 300ms
+    if (timeoutId) clearTimeout(timeoutId);
+
+    const newTimeoutId = setTimeout(async () => {
+      const res = await fetch(
+        `/api/tickers?search=${encodeURIComponent(value)}`
+      );
+      const data = await res.json();
+      setTickers(data.tickers || []);
+      setLoading(false);
+    }, 300);
+    setTimeoutId(newTimeoutId);
   }
 
   function handleSelect(symbol) {
     setInput(symbol);
-    setFiltered(
-      tickers
-        .filter(
-          (t) =>
-            t.symbol.startsWith(symbol) ||
-            (t.name && t.name.toUpperCase().includes(symbol))
-        )
-        .slice(0, 100)
-    );
+    setTickers([]);
     onSelect(symbol);
   }
 
@@ -54,7 +49,7 @@ export default function StockTickers({ onSelect }) {
         style={{ padding: 8, fontSize: 16, width: 260, marginRight: 8 }}
       />
       <datalist id="tickers">
-        {filtered.map((ticker) => (
+        {tickers.map((ticker) => (
           <option
             value={ticker.symbol}
             label={
@@ -70,6 +65,7 @@ export default function StockTickers({ onSelect }) {
       >
         Load
       </button>
+      {loading && <span style={{ marginLeft: 10 }}>Loading...</span>}
     </div>
   );
 }
