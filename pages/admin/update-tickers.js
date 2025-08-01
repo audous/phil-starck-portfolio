@@ -1,6 +1,7 @@
 import { useState } from "react";
+import withAdminGate from "../../components/hoc/withAdminGate";
 
-export default function UpdateTickersAdmin() {
+function UpdateTickersAdmin() {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -24,3 +25,4 @@ export default function UpdateTickersAdmin() {
     </div>
   );
 }
+export default withAdminGate(UpdateTickersAdmin);
