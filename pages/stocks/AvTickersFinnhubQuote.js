@@ -1,5 +1,5 @@
 import { useState } from "react";
-import StockTickers from "../../components/StockTickers";
+import StockTickers from "../../components/stocks/StockTickers";
 import withLoginGate from "../../components/hoc/withLoginGate";
 
 function AvTickersFinnhubQuote() {

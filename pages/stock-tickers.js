@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
 import Nav from "../components/Nav";
 import LoginModal from "../components/LoginModal";
-import StockTickers from "../components/StockTickers";
+import StockTickers from "../components/stocks/StockTickers";
 
 // Chart.js imports & registration
 import {
